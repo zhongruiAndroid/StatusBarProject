@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import java.lang.reflect.Method;
+
 /**
  * Created by Jaeger on 16/2/14.
  * <p>
@@ -27,7 +29,7 @@ import android.widget.LinearLayout;
 public class StatusBarUtil {
 
     public static final int DEFAULT_STATUS_BAR_ALPHA = 112;
-    private static final int FAKE_STATUS_BAR_VIEW_ID = R.id.statusbarutil_fake_status_bar_view;
+    private static final int FAKE_STATUS_BAR_VIEW_ID = R.id.status_bar_view_id;
     private static final int FAKE_TRANSLUCENT_VIEW_ID = R.id.statusbarutil_translucent_view;
     private static final int TAG_KEY_HAVE_SET_OFFSET = -123;
 
@@ -40,7 +42,29 @@ public class StatusBarUtil {
     public static void setColor(Activity activity, @ColorInt int color) {
         setColor(activity, color, DEFAULT_STATUS_BAR_ALPHA);
     }
-
+    private static boolean isEMUI3=false;
+    private static boolean isEmotionUI3(){
+        if(isEMUI3){
+            return isEMUI3;
+        }
+        String property = getSystemProperty("ro.build.version.emui", "");
+        if ("EmotionUI 3".equals(property) || property.contains("EmotionUI_3.1")) {
+            isEMUI3=true;
+            return true;
+        }
+        return false;
+    }
+    private static String getSystemProperty(String key, String defaultValue) {
+        try {
+            Class<?> clz = Class.forName("android.os.SystemProperties");
+            Method get = clz.getMethod("get", String.class, String.class);
+            get.setAccessible(true);
+            return (String) get.invoke(clz, key, defaultValue);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return defaultValue;
+    }
     /**
      * 设置状态栏颜色
      *
@@ -50,11 +74,11 @@ public class StatusBarUtil {
      */
 
     public static void setColor(Activity activity, @ColorInt int color, @IntRange(from = 0, to = 255) int statusBarAlpha) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP&&!isEmotionUI3()) {
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             activity.getWindow().setStatusBarColor(calculateStatusColor(color, statusBarAlpha));
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT||isEmotionUI3()) {
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
             View fakeStatusBarView = decorView.findViewById(FAKE_STATUS_BAR_VIEW_ID);
