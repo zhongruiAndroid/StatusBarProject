@@ -13,10 +13,10 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file("../test.jks")
-            storePassword "mgamebpmprovery"
-            keyAlias "mgamepproverb"
-            keyPassword "mgamebpmprovery"
+            storeFile file("../myapp.jks")
+            storePassword "zhongrui"
+            keyAlias "zhongrui"
+            keyPassword "zhongrui"
         }
     }
     buildTypes {
