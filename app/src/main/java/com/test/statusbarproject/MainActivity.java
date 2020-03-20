@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -25,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         StatusBarUtils.setStatusColor(this, ContextCompat.getColor(this, R.color.colorAccent));
         initView();
+
+        TextView tv=findViewById(R.id.tv);
+        ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
+        layoutParams.height=StatusBarUtils.getStatusBarHeight(this);
+        tv.setLayoutParams(layoutParams);
     }
 
     private void setBarColor( @FloatRange(from = 0.0D,to = 1.0D) float ratio){
@@ -37,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startAct(TestActivity.class);
+            }
+        });
+        Button btTestDrawerLayout=findViewById(R.id.btTestDrawerLayout);
+        btTestDrawerLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startAct(DrawLayoutActivity.class);
             }
         });
     }

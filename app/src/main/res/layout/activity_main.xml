@@ -4,14 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="android"
+        android:gravity="center"
+        android:background="@color/_ff9acd"
+        />
 
     <Button
         android:id="@+id/btTest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAllCaps="false"
         android:text="测试"
-        />
+        android:textAllCaps="false" />
 
+    <Button
+        android:id="@+id/btTestDrawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="测试DrawerLayout"
+        android:textAllCaps="false" />
 </LinearLayout>

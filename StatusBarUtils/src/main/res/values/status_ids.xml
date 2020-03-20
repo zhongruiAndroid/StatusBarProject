@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item type="id" name="status_bar_view_id" />
+    <item type="id" name="status_bar_view_parent_id" />
     <item type="id" name="statusbarutil_translucent_view" />
 </resources>
