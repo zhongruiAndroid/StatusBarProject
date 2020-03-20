@@ -18,70 +18,48 @@ import android.widget.TextView;
 import com.github.statusbar.StatusBarUtil;
 import com.github.statusbar.StatusBarUtils;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         StatusBarUtils.setStatusColor(this, ContextCompat.getColor(this, R.color.colorAccent));
+
         initView();
 
-        TextView tv=findViewById(R.id.tv);
-        ViewGroup.LayoutParams layoutParams = tv.getLayoutParams();
-        layoutParams.height=StatusBarUtils.getStatusBarHeight(this);
-        tv.setLayoutParams(layoutParams);
     }
 
-    private void setBarColor( @FloatRange(from = 0.0D,to = 1.0D) float ratio){
-        StatusBarUtils.setStatusColor(this, ContextCompat.getColor(this, R.color.c_ADECE5),ratio);
-    }
+
 
     private void initView() {
-        Button btTest=findViewById(R.id.btTest);
-        btTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        Button btTest = findViewById(R.id.btTest);
+        btTest.setOnClickListener(this);
+
+        Button btTestDrawerLayout = findViewById(R.id.btTestDrawerLayout);
+        btTestDrawerLayout.setOnClickListener(this);
+
+        Button btTestIntoStatusBar = findViewById(R.id.btTestIntoStatusBar);
+        btTestIntoStatusBar.setOnClickListener(this);
+    }
+
+    private void startAct(Class clazz) {
+        startActivity(new Intent(this, clazz));
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btTest:
                 startAct(TestActivity.class);
-            }
-        });
-        Button btTestDrawerLayout=findViewById(R.id.btTestDrawerLayout);
-        btTestDrawerLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.btTestDrawerLayout:
                 startAct(DrawLayoutActivity.class);
-            }
-        });
-    }
-    private void showDialog() {
-        final Dialog dialog=new Dialog(this);
-        TextView textView = new TextView(this);
-        textView.setText("TextView");
-        dialog.setContentView(textView);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Context context = dialog.getContext();
-                Activity activity = findActivity(context);
-                if(activity==null||activity.isFinishing()){
-                }else{
-                    dialog.show();
-                }
-            }
-        },1000);
-    }
-    public static Activity findActivity(Context context) {
-        if (context instanceof Activity) {
-            return (Activity) context;
+                break;
+            case R.id.btTestIntoStatusBar:
+                startAct(IntoStatusBarActivity.class);
+                break;
         }
-        if (context instanceof ContextWrapper) {
-            ContextWrapper wrapper = (ContextWrapper) context;
-            return findActivity(wrapper.getBaseContext());
-        } else {
-            return null;
-        }
-    }
-    private void startAct(Class clazz){
-        startActivity(new Intent(this,clazz));
     }
 }

@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -28,21 +29,40 @@ import com.github.statusbar.StatusBarUtils;
 
 public class TestActivity extends AppCompatActivity {
 
-    private Button bt;
     AppCompatSeekBar sbSeekBar;
+    RadioGroup rgColor;
+    private float ratio;
+    private int color;
+    private int colorEnd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        setBarColor(0);
+        color=ContextCompat.getColor(TestActivity.this, R.color.c_ADECE5);
+        colorEnd=Color.BLACK;
+
+        setBarColor(color,colorEnd,ratio);
+
+        rgColor=findViewById(R.id.rgColor);
+        rgColor.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId==R.id.rbBlack){
+                    colorEnd=Color.BLACK;
+                }else{
+                    colorEnd=ContextCompat.getColor(TestActivity.this, R.color._ffff7a84);
+                }
+                setBarColor(color,colorEnd,ratio);
+            }
+        });
 
         sbSeekBar=findViewById(R.id.sbSeekBar);
         sbSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                float v = progress * 1f / sbSeekBar.getMax();
-                setBarColor(v);
+                ratio = progress * 1f / sbSeekBar.getMax();
+                setBarColor(color,colorEnd,ratio);
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -54,8 +74,8 @@ public class TestActivity extends AppCompatActivity {
 
     }
 
-    private void setBarColor( @FloatRange(from = 0.0D,to = 1.0D) float ratio){
-        StatusBarUtils.setStatusColor(this,ContextCompat.getColor(TestActivity.this, R.color.c_ADECE5),ratio);
+    private void setBarColor(@ColorInt int color,@ColorInt int colorEnd ,@FloatRange(from = 0.0D,to = 1.0D) float ratio){
+        StatusBarUtils.setStatusColor(this,color,colorEnd,ratio);
     }
 
 }

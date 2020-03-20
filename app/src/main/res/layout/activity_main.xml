@@ -6,27 +6,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
-
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="android"
-        android:gravity="center"
-        android:background="@color/_ff9acd"
-        />
-
     <Button
         android:id="@+id/btTest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="测试"
+        android:text="测试动态改变status颜色"
         android:textAllCaps="false" />
-
     <Button
         android:id="@+id/btTestDrawerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="测试DrawerLayout"
+        android:text="测试DrawerLayout(建议用下面那种view伸入状态栏的方式)"
+        android:textAllCaps="false" />
+    <Button
+        android:id="@+id/btTestIntoStatusBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="view伸入状态栏"
         android:textAllCaps="false" />
 </LinearLayout>

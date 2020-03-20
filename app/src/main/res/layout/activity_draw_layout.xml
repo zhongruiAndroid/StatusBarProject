@@ -19,14 +19,16 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="afasfasfsfasf"
+                android:text="左边有侧滑"
                 android:background="@color/_9a81f1"
+                android:gravity="center"
                 />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:background="@color/_77e8ec"
-                android:text="android" />
+                android:text="右边有侧滑"
+                android:gravity="center" />
         </LinearLayout>
 
 
