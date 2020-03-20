@@ -24,7 +24,6 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.github.statusbar.StatusBarUtil;
 import com.github.statusbar.StatusBarUtils;
 
 public class TestActivity extends AppCompatActivity {

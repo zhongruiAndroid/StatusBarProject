@@ -34,8 +34,7 @@ public class IntoStatusBarActivity extends AppCompatActivity {
             @Override
             public void onScrollChange(NestedScrollView nestedScrollView, int x, int y, int i2, int i3) {
                 float radio = 1;
-                if (y > 300) {
-                } else {
+                if (y <= 400) {
                     radio = y * 1f / 200;
                 }
                 flTitle.setAlpha(radio);

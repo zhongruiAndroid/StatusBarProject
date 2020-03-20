@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.github.statusbar.StatusBarUtil;
 import com.github.statusbar.StatusBarUtils;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
