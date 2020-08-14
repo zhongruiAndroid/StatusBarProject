@@ -27,13 +27,14 @@ public class StatusBarUtils {
     }
 
     public static void setStatusColor(Activity activity, @ColorInt int color, @FloatRange(from = 0.0D, to = 1.0D) float ratio) {
-        setStatusColor(activity, color,Color.BLACK, ratio);
+        setStatusColor(activity, color, Color.BLACK, ratio);
     }
+
     public static void setStatusColor(Activity activity, @ColorInt int color, @ColorInt int colorEnd, @FloatRange(from = 0.0D, to = 1.0D) float ratio) {
         if (isNull(activity)) {
             return;
         }
-        int statusBarColor = ColorUtils.blendARGB(color,colorEnd, ratio);
+        int statusBarColor = ColorUtils.blendARGB(color, colorEnd, ratio);
         Window window = activity.getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isEmotionUI3()) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -64,18 +65,29 @@ public class StatusBarUtils {
     }
 
     public static void setIntoStatusBar(Activity activity) {
-        setIntoStatusBar(activity, Color.TRANSPARENT);
+        setIntoStatusBar(activity, true);
+    }
+
+    public static void setIntoStatusBar(Activity activity, boolean isIntoStatusBar) {
+        setIntoStatusBar(activity, Color.TRANSPARENT, isIntoStatusBar);
     }
 
     public static void setIntoStatusBar(Activity activity, @ColorInt int color) {
-        setIntoStatusBar(activity, color, 0);
+        setIntoStatusBar(activity, color, 0, true);
     }
-
-    public static void setIntoStatusBar(Activity activity, @ColorInt int color, @FloatRange(from = 0.0D, to = 1.0D) float ratio) {
-        setIntoStatusBar(activity, color, Color.BLACK, ratio);
+    public static void setIntoStatusBar(Activity activity, @ColorInt int color, boolean isIntoStatusBar) {
+        setIntoStatusBar(activity, color, 0, isIntoStatusBar);
     }
-
+    public static void setIntoStatusBar(Activity activity, @ColorInt int color, @FloatRange(from = 0.0D, to = 1.0D) float ratio ) {
+        setIntoStatusBar(activity, color, Color.BLACK, ratio,true);
+    }
+    public static void setIntoStatusBar(Activity activity, @ColorInt int color, @FloatRange(from = 0.0D, to = 1.0D) float ratio, boolean isIntoStatusBar) {
+        setIntoStatusBar(activity, color, Color.BLACK, ratio, isIntoStatusBar);
+    }
     public static void setIntoStatusBar(Activity activity, @ColorInt int color, @ColorInt int colorEnd, @FloatRange(from = 0.0D, to = 1.0D) float ratio) {
+        setIntoStatusBar(activity,color,colorEnd,ratio,true);
+    }
+    public static void setIntoStatusBar(Activity activity, @ColorInt int color, @ColorInt int colorEnd, @FloatRange(from = 0.0D, to = 1.0D) float ratio, boolean isIntoStatusBar) {
         if (isNull(activity)) {
             return;
         }
@@ -86,9 +98,18 @@ public class StatusBarUtils {
         int statusBarColor = ColorUtils.blendARGB(color, colorEnd, ratio);
         Window window = activity.getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isEmotionUI3()) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+            int systemUiVisibility = decorView.getSystemUiVisibility();
+            if (isIntoStatusBar) {
+                systemUiVisibility |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+                systemUiVisibility |= View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            } else {
+                systemUiVisibility &= ~View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+                systemUiVisibility &= ~View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            }
+            decorView.setSystemUiVisibility(systemUiVisibility);
             window.setStatusBarColor(statusBarColor);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -104,12 +125,12 @@ public class StatusBarUtils {
 
     @Deprecated
     public static void setStatusColorForDrawerLayout(Activity activity, DrawerLayout drawerLayout, @ColorInt int color) {
-        setStatusColorForDrawerLayout(activity,drawerLayout,color,Color.BLACK,0);
+        setStatusColorForDrawerLayout(activity, drawerLayout, color, Color.BLACK, 0);
     }
 
     @Deprecated
     public static void setStatusColorForDrawerLayout(Activity activity, DrawerLayout drawerLayout, @ColorInt int color, @FloatRange(from = 0.0D, to = 1.0D) float ratio) {
-        setStatusColorForDrawerLayout(activity,drawerLayout,color,Color.BLACK,ratio);
+        setStatusColorForDrawerLayout(activity, drawerLayout, color, Color.BLACK, ratio);
     }
 
     @Deprecated
@@ -122,7 +143,7 @@ public class StatusBarUtils {
         if (decorView == null) {
             return;
         }
-        int statusBarColor = ColorUtils.blendARGB(color,colorEnd, ratio);
+        int statusBarColor = ColorUtils.blendARGB(color, colorEnd, ratio);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isEmotionUI3()) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -176,7 +197,7 @@ public class StatusBarUtils {
 
     private static boolean isEMUI3 = false;
 
-    private static boolean isEmotionUI3() {
+    public static boolean isEmotionUI3() {
         if (isEMUI3) {
             return isEMUI3;
         }
