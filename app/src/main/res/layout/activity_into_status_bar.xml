@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context=".IntoStatusBarActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
-
+        
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nsv"
             android:layout_width="match_parent"
@@ -43,7 +44,49 @@
                         android:src="@drawable/test"
                         tools:ignore="MissingConstraints" />
                 </LinearLayout>
+                <android.support.v7.widget.AppCompatSeekBar
+                    android:id="@+id/sbSeekBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="100" />
+                <RadioGroup
+                    android:id="@+id/rgColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    >
+                    <RadioButton
+                        android:id="@+id/rbBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="黑色"
+                        />
+                    <RadioButton
+                        android:id="@+id/rbPink"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="粉色"
+                        />
 
+                </RadioGroup>
+                <CheckBox
+                    android:id="@+id/cbStatusColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="currentStatusColor" />
+
+                <CheckBox
+                    android:id="@+id/cbFitsSystemWindows"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="isFitsSystemWindows" />
+
+                <CheckBox
+                    android:id="@+id/cbStatusBarDarkFont"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="isStatusBarDarkFont" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -182,6 +225,21 @@
                 android:text="title"
                 android:textSize="20sp" />
         </FrameLayout>
+        <Button
+            android:id="@+id/btTest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="button"
+            android:layout_marginTop="60dp"
+            />
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="是否伸入状态栏"
+            android:layout_centerInParent="true"
+            />
     </RelativeLayout>
     <LinearLayout
         android:layout_width="200dp"

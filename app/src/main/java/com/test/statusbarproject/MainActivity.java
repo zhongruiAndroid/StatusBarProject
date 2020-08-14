@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Button btTestIntoStatusBar = findViewById(R.id.btTestIntoStatusBar);
         btTestIntoStatusBar.setOnClickListener(this);
+
+        Button btTestIntoStatusBar2 = findViewById(R.id.btTestIntoStatusBar2);
+        btTestIntoStatusBar2.setOnClickListener(this);
     }
 
     private void startAct(Class clazz) {
@@ -58,6 +61,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btTestIntoStatusBar:
                 startAct(IntoStatusBarActivity.class);
+                break;
+            case R.id.btTestIntoStatusBar2:
+                startAct(TestStatusActivity.class);
                 break;
         }
     }

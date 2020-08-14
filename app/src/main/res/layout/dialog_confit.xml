@@ -26,6 +26,16 @@
             tools:text="华为" />
     </LinearLayout>
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:hint="test"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:textSize="13sp" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

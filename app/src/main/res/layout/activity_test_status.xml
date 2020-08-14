@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".TestStatusActivity"
+    android:background="@color/_4103A9F4"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/_ff08aefa"
+        android:gravity="center"
+        android:text="android" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/_ffd2d2d2"
+        android:gravity="center"
+        android:text="滑动布局试试" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/_1ccf89"
+        android:gravity="center"
+        android:text="android" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/_ffd2d2d2"
+        android:gravity="center"
+        android:text="android" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/_9a81f1"
+        android:gravity="center"
+        android:text="android" />
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="view伸入状态栏"
+        />
+    <android.support.v7.widget.AppCompatSeekBar
+        android:id="@+id/sbColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        />
+    <Button
+        android:id="@+id/btSet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="确定设置颜色"
+        />
+    <Button
+        android:id="@+id/btDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="dialog"
+        />
+</LinearLayout>

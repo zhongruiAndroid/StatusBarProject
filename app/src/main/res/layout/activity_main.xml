@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".MainActivity">
     <Button
@@ -23,5 +24,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="view伸入状态栏"
+        android:textAllCaps="false" />
+    <Button
+        android:id="@+id/btTestIntoStatusBar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="view伸入状态栏测试"
         android:textAllCaps="false" />
 </LinearLayout>

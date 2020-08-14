@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".IntoStatusBarActivity"></activity>
+        <activity android:name=".TestStatusActivity"></activity>
+        <activity android:name=".IntoStatusBarActivity" />
         <activity android:name=".DrawLayoutActivity" />
         <activity android:name=".TestActivity" />
         <activity android:name=".MainActivity">

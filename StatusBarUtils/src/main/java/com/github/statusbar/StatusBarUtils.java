@@ -22,76 +22,39 @@ public class StatusBarUtils {
         return object == null;
     }
 
+    public static void setStatusColor(Activity activity) {
+        setStatusColor(activity, true);
+    }
+
+    public static void setStatusColor(Activity activity, boolean isIntoStatusBar) {
+        setStatusColor(activity, Color.TRANSPARENT, isIntoStatusBar);
+    }
+
     public static void setStatusColor(Activity activity, @ColorInt int color) {
-        setStatusColor(activity, color, 0);
+        setStatusColor(activity, color, 0, true);
+    }
+
+    public static void setStatusColor(Activity activity, @ColorInt int color, boolean isIntoStatusBar) {
+        setStatusColor(activity, color, 0, isIntoStatusBar);
     }
 
     public static void setStatusColor(Activity activity, @ColorInt int color, @FloatRange(from = 0.0D, to = 1.0D) float ratio) {
-        setStatusColor(activity, color, Color.BLACK, ratio);
+        setStatusColor(activity, color, Color.BLACK, ratio, true);
+    }
+
+    public static void setStatusColor(Activity activity, @ColorInt int color, @FloatRange(from = 0.0D, to = 1.0D) float ratio, boolean isIntoStatusBar) {
+        setStatusColor(activity, color, Color.BLACK, ratio, isIntoStatusBar);
     }
 
     public static void setStatusColor(Activity activity, @ColorInt int color, @ColorInt int colorEnd, @FloatRange(from = 0.0D, to = 1.0D) float ratio) {
+        setStatusColor(activity, color, colorEnd, ratio, true);
+    }
+
+    public static void setStatusColor(Activity activity, @ColorInt int color, @ColorInt int colorEnd, @FloatRange(from = 0.0D, to = 1.0D) float ratio, boolean isIntoStatusBar) {
         if (isNull(activity)) {
             return;
         }
-        int statusBarColor = ColorUtils.blendARGB(color, colorEnd, ratio);
-        Window window = activity.getWindow();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isEmotionUI3()) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(statusBarColor);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
-            if (decorView == null) {
-                return;
-            }
-            ViewGroup contentView = decorView.findViewById(android.R.id.content);
-            if (contentView == null) {
-                return;
-            }
-            View childAt = contentView.getChildAt(0);
-            if (childAt != null) {
-                childAt.setFitsSystemWindows(true);
-            }
-            View statusBarView = decorView.findViewById(R.id.status_bar_view_id);
-            if (statusBarView == null) {
-                statusBarView = createStatusBarView(activity, statusBarColor);
-                decorView.addView(statusBarView, 0);
-            } else {
-                statusBarView.setBackgroundColor(statusBarColor);
-            }
-        }
-    }
-
-    public static void setIntoStatusBar(Activity activity) {
-        setIntoStatusBar(activity, true);
-    }
-
-    public static void setIntoStatusBar(Activity activity, boolean isIntoStatusBar) {
-        setIntoStatusBar(activity, Color.TRANSPARENT, isIntoStatusBar);
-    }
-
-    public static void setIntoStatusBar(Activity activity, @ColorInt int color) {
-        setIntoStatusBar(activity, color, 0, true);
-    }
-    public static void setIntoStatusBar(Activity activity, @ColorInt int color, boolean isIntoStatusBar) {
-        setIntoStatusBar(activity, color, 0, isIntoStatusBar);
-    }
-    public static void setIntoStatusBar(Activity activity, @ColorInt int color, @FloatRange(from = 0.0D, to = 1.0D) float ratio ) {
-        setIntoStatusBar(activity, color, Color.BLACK, ratio,true);
-    }
-    public static void setIntoStatusBar(Activity activity, @ColorInt int color, @FloatRange(from = 0.0D, to = 1.0D) float ratio, boolean isIntoStatusBar) {
-        setIntoStatusBar(activity, color, Color.BLACK, ratio, isIntoStatusBar);
-    }
-    public static void setIntoStatusBar(Activity activity, @ColorInt int color, @ColorInt int colorEnd, @FloatRange(from = 0.0D, to = 1.0D) float ratio) {
-        setIntoStatusBar(activity,color,colorEnd,ratio,true);
-    }
-    public static void setIntoStatusBar(Activity activity, @ColorInt int color, @ColorInt int colorEnd, @FloatRange(from = 0.0D, to = 1.0D) float ratio, boolean isIntoStatusBar) {
-        if (isNull(activity)) {
-            return;
-        }
-        ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
+        final ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
         if (decorView == null) {
             return;
         }
@@ -104,22 +67,31 @@ public class StatusBarUtils {
             int systemUiVisibility = decorView.getSystemUiVisibility();
             if (isIntoStatusBar) {
                 systemUiVisibility |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-                systemUiVisibility |= View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
             } else {
                 systemUiVisibility &= ~View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-                systemUiVisibility &= ~View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
             }
-            decorView.setSystemUiVisibility(systemUiVisibility);
+            final int finalSystemUiVisibility = systemUiVisibility;
+            decorView.post(new Runnable() {
+                @Override
+                public void run() {
+                    decorView.setSystemUiVisibility(finalSystemUiVisibility);
+                }
+            });
             window.setStatusBarColor(statusBarColor);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             View statusBarView = decorView.findViewById(R.id.status_bar_view_id);
             if (statusBarView == null) {
                 statusBarView = createStatusBarView(activity, statusBarColor);
-                decorView.addView(statusBarView, 0);
+                decorView.addView(statusBarView);
             } else {
                 statusBarView.setBackgroundColor(statusBarColor);
             }
+            ViewGroup contentView = decorView.findViewById(android.R.id.content);
+            if (contentView == null) {
+                return;
+            }
+            contentView.setPadding(0, isIntoStatusBar ? 0 : getStatusBarHeight(activity), 0, 0);
         }
     }
 
